@@ -1,10 +1,8 @@
 <template>
     <div class="container">
         <Board :board="board" :boardSize="boardSize" />
-        <!-- {{ board[0] }}{{ board[7] }} -->
-        <!-- {{ board }} -->
         <ControlPanel :isSolving="isSolving" @start="startSolving" @stop="stopSolving" />
-        <solution :solutions="solutions" :boardSize="boardSize"  />
+        <solution :solutions="solutions" :boardSize="boardSize" />
     </div>
 </template>
 
@@ -22,12 +20,12 @@ export default {
         solution,
     },
     setup() {
-        const boardSize = 5;
+        const boardSize = 7;
         let board = reactive(Array.from({ length: boardSize }, () => -1));
         const isSolving = ref(false);
-        let solutions=reactive([]);
+        let solutions = reactive([]);
 
-// console.log(board);
+        // console.log(board);
 
         const isSafe = (row, col) => {
             for (let i = 0; i < col; i++) {
@@ -45,7 +43,7 @@ export default {
                 console.log(solutions);
                 return;
             }
-            if(isSolving.value===false){
+            if (isSolving.value === false) {
                 return;
             }
             for (let row = 0; row < boardSize; row++) {
@@ -55,7 +53,7 @@ export default {
                     await new Promise((resolve) => setTimeout(resolve, 150)); // Add delay for visualization
                     await solveNQueensUtil(col + 1)
                 }
-                if(isSolving.value===false){
+                if (isSolving.value === false) {
                     return;
                 }
                 board[col] = -1; // Backtrack
@@ -65,9 +63,9 @@ export default {
 
         const startSolving = async () => {
             isSolving.value = true;
-            solutions.length=0;
-            for(let i=0;i<boardSize;i++){
-                board[i]=-1;
+            solutions.length = 0;
+            for (let i = 0; i < boardSize; i++) {
+                board[i] = -1;
             }
             // board= reactive(Array.from({ length: boardSize }, () => -1));
             await solveNQueensUtil(0);
@@ -75,7 +73,7 @@ export default {
         };
 
         const stopSolving = () => {
-            isSolving.value=false;
+            isSolving.value = false;
         };
 
         return {
@@ -87,6 +85,12 @@ export default {
             solutions,
         };
     },
+    provide() {
+        return {
+
+            Size: this.boardSize,
+        }
+    }
 };
 </script>
 

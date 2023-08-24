@@ -1,21 +1,12 @@
 <template>
-    <!-- <sheet class="d-flex">
-        <sheet v-for="row in board" :key="row" class="board-row">
-            <sheet v-for="col in boardSize" :key="col" class="board-cell">
-                <Queen :isQueenPlaced="board[row - 1] === col - 1" /> -->
-                <!-- {{ board[row - 1] }} {{ col - 1 }},  -->
-                <!-- {{ board[row] }} -->
-                <!-- <Queen :isQueenPlaced="board[row - 1] === col - 1" /> -->
-            <!-- </sheet> -->
-            <!-- <br> -->
-        <!-- </sheet> -->
-    <!-- </sheet> -->
-    <!-- {{ board }} -->
-    <div class="grid-container">
-        <div v-for="row in board" :key="row" class="board-row">
-            <div v-for="col in boardSize" :key="col" class="board-cell grid-item">
-                <Queen :isQueenPlaced="(row == (col - 1))" />
+    <div>
+        <div class="parent">
+            <div v-for="col in boardSize" :key="col">
+                <div v-for="row in board" :key="row" class="child">
+                    <Queen :isQueenPlaced="(row == (col - 1))" />
+                </div>
             </div>
+            <br>
         </div>
     </div>
 </template>
@@ -36,21 +27,23 @@ export default {
 
 <style scoped>
 /* Add your board styling here */
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto ;
-  background-color: #2196F3;
-  padding: 2px;
-  width:256px;
+.child {
+    display: inline-block;
+    background-color: rgba(17, 138, 145, 0.715);
+    font-size: 30px;
+    border: 1px solid black;
+    text-align: center;
+    /* padding: 1rem 1rem; */
+    height: 50px;
+    width: 50px;
+    vertical-align: middle;
 }
-.grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  /* padding: 10px; */
-  font-size: 30px;
-  text-align: center;
-  height:50px;
-  width:50px;
-  /* width:50px */
+
+.parent {
+    /* border: 1px solid black; */
+    /* margin: 1rem; */
+    padding: 4rem;
+
+    text-align: center;
 }
 </style>

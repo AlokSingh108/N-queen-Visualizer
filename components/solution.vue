@@ -1,14 +1,12 @@
 <template>
     <div>
-        <div v-if="solutions!=undefined && solutions.length>0">
+        <div v-if="solutions != undefined && solutions.length > 0" class="d-flex justify-sm-space-around flex-wrap">
 
-            <div v-for="(sol,index) in solutions" :key="index">
-                Solution {{ index+1 }}:
-                <div class="grid-container">
-                    <div v-for="row in solutions[index]" :key="row" class="board-row">
-                        <div v-for="col in boardSize" :key="col" class="board-cell grid-item">
-                            <Queen :isQueenPlaced="(row == (col - 1))" />
-                        </div>
+            <div v-for="(sol, index) in solutions" :key="index" class="parent ma-3">
+                <h1>Solution {{ index + 1 }}:</h1>
+                <div v-for="col in boardSize" :key="col" class="parent">
+                    <div v-for="row in solutions[index]" :key="row" class="child">
+                        <Queen :isQueenPlaced="(row == (col - 1))" />
                     </div>
                 </div>
                 <br>
@@ -31,21 +29,22 @@ export default {
 </script>
 
 <style scoped>
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  background-color: #2196F3;
-  padding: 2px;
-  width:256px;
+.parent {
+    /* border: 1px solid black; */
+    /* margin: 1rem; */
+    /* padding: 2rem 2rem; */
+
+    text-align: center;
 }
-.grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  /* padding: 10px; */
-  font-size: 30px;
-  text-align: center;
-  height:50px;
-  width:50px;
-  /* width:50px */
-}
-</style>
+
+.child {
+    display: inline-block;
+    background-color: rgba(17, 138, 145, 0.715);
+    font-size: 30px;
+    border: 1px solid black;
+    text-align: center;
+    /* padding: 1rem 1rem; */
+    height: 50px;
+    width: 50px;
+    vertical-align: middle;
+}</style>

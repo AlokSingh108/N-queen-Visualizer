@@ -1,7 +1,7 @@
 <template>
     <div class="control-panel">
-        <button @click="startSolving" :disabled="isSolving">Start</button>
-        <button @click="stopSolving" :disabled="!isSolving">Stop</button>
+        <v-btn @click="startSolving" :disabled="isSolving" class="btn" variant="outlined">Start</v-btn>
+        <v-btn @click="stopSolving" :disabled="!isSolving" class="btn" variant="outlined">Stop</v-btn>
     </div>
 </template>
 
@@ -22,5 +22,8 @@ export default {
 </script>
 
 <style scoped>
-/* Add your control panel styling here */
+.control-panel{
+    text-align: center;
+    margin-bottom: 30px;
+}
 </style>
