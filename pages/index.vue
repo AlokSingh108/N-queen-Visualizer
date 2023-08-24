@@ -20,7 +20,7 @@ export default {
         solution,
     },
     setup() {
-        const boardSize = 7;
+        const boardSize = 8;
         let board = reactive(Array.from({ length: boardSize }, () => -1));
         const isSolving = ref(false);
         let solutions = reactive([]);
