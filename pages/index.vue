@@ -1,5 +1,9 @@
 <template>
     <div class="container">
+        <div class="cen">
+            <label for="">Number of Queens</label><br>
+            <input type="text" :disabled="isSolving" v-model.number="NoQ">
+        </div>
         <Board :board="board" :boardSize="boardSize" />
         <ControlPanel :isSolving="isSolving" @start="startSolving" @stop="stopSolving" />
         <solution :solutions="solutions" :boardSize="boardSize" />
@@ -20,10 +24,11 @@ export default {
         solution,
     },
     setup() {
-        const boardSize = 8;
-        let board = reactive(Array.from({ length: boardSize }, () => -1));
+        let boardSize = ref(5);
+        let board = reactive(Array.from({ length: boardSize.value }, () => -1));
         const isSolving = ref(false);
         let solutions = reactive([]);
+        let NoQ = ref(5);
 
         // console.log(board);
 
@@ -37,7 +42,7 @@ export default {
         };
 
         const solveNQueensUtil = async (col) => {
-            if (col >= boardSize) {
+            if (col >= boardSize.value) {
                 solutions.push([...board]);
                 await new Promise((resolve) => setTimeout(resolve, 1000)); // Add delay for visualization
                 console.log(solutions);
@@ -46,7 +51,7 @@ export default {
             if (isSolving.value === false) {
                 return;
             }
-            for (let row = 0; row < boardSize; row++) {
+            for (let row = 0; row < boardSize.value; row++) {
                 board[col] = row;
                 await new Promise((resolve) => setTimeout(resolve, 100)); // Add delay for visualization
                 if (isSafe(row, col)) {
@@ -64,8 +69,10 @@ export default {
         const startSolving = async () => {
             isSolving.value = true;
             solutions.length = 0;
-            for (let i = 0; i < boardSize; i++) {
-                board[i] = -1;
+            boardSize.value = NoQ.value;
+            board.length = 0;
+            for (let i = 0; i < NoQ.value; i++) {
+                board.push(-1);
             }
             // board= reactive(Array.from({ length: boardSize }, () => -1));
             await solveNQueensUtil(0);
@@ -83,17 +90,30 @@ export default {
             startSolving,
             stopSolving,
             solutions,
+            NoQ,
         };
     },
-    provide() {
-        return {
 
-            Size: this.boardSize,
-        }
-    }
 };
 </script>
 
 <style>
+.cen {
+
+    text-align: center;
+    margin-top: 10px;
+
+}
+
+input[type=text] {
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
 /* Add your container styling here */
 </style>
