@@ -5,6 +5,12 @@
             <input type="text" :disabled="isSolving" v-model.number="NoQ">
         </div>
         <Board :board="board" :boardSize="boardSize" />
+        <!-- <template> -->
+            <div class="w-75 mx-auto">
+                <label for="" class="mx-3">Speed Bar</label><br>
+                <v-slider v-model="val" :min="0" :max="500" :step="20" thumb-label></v-slider>
+            </div>
+        <!-- </template> -->
         <ControlPanel :isSolving="isSolving" @start="startSolving" @stop="stopSolving" />
         <solution :solutions="solutions" :boardSize="boardSize" />
     </div>
@@ -29,6 +35,7 @@ export default {
         const isSolving = ref(false);
         let solutions = reactive([]);
         let NoQ = ref(5);
+        let val = ref(100);
 
         // console.log(board);
 
@@ -44,7 +51,7 @@ export default {
         const solveNQueensUtil = async (col) => {
             if (col >= boardSize.value) {
                 solutions.push([...board]);
-                await new Promise((resolve) => setTimeout(resolve, 1000)); // Add delay for visualization
+                await new Promise((resolve) => setTimeout(resolve, 100)); // Add delay for visualization
                 console.log(solutions);
                 return;
             }
@@ -53,9 +60,12 @@ export default {
             }
             for (let row = 0; row < boardSize.value; row++) {
                 board[col] = row;
-                await new Promise((resolve) => setTimeout(resolve, 100)); // Add delay for visualization
+                // await new Promise((resolve) => setTimeout(resolve, 100)); // Add delay for visualization
+                // console.log(val.value);
+                await new Promise((resolve) => setTimeout(resolve, 500 - val.value)); // Add delay for visualization
                 if (isSafe(row, col)) {
-                    await new Promise((resolve) => setTimeout(resolve, 150)); // Add delay for visualization
+                    await new Promise((resolve) => setTimeout(resolve, 500 - val.value)); // Add delay for visualization
+                    // await new Promise((resolve) => setTimeout(resolve, 150)); // Add delay for visualization
                     await solveNQueensUtil(col + 1)
                 }
                 if (isSolving.value === false) {
@@ -91,6 +101,7 @@ export default {
             stopSolving,
             solutions,
             NoQ,
+            val,
         };
     },
 
