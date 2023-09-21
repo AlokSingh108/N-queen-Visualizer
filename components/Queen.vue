@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isQueenPlaced==true">♛</div>
+    <div v-if="isQueenPlaced==true" >♛</div>
 </template>
 
 <script>
