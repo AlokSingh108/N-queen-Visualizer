@@ -4,7 +4,7 @@
             <label for="">Number of Queens</label><br>
             <input type="text" :disabled="isSolving" v-model.number="NoQ">
         </div>
-        <Board :board="board" :boardSize="boardSize" />
+        <Board :board="board" :boardSize="boardSize" :isSolutionFound="isSolutionFound" />
         <!-- <template> -->
             <div class="w-75 mx-auto">
                 <label for="" class="mx-3">Speed Bar</label><br>
@@ -36,6 +36,7 @@ export default {
         let solutions = reactive([]);
         let NoQ = ref(5);
         let val = ref(100);
+        let isSolutionFound=ref(false);
 
         // console.log(board);
 
@@ -50,8 +51,10 @@ export default {
 
         const solveNQueensUtil = async (col) => {
             if (col >= boardSize.value) {
+                isSolutionFound.value=true;
+                await new Promise((resolve) => setTimeout(resolve, 2000)); // Add delay for visualization
+                isSolutionFound.value=false;
                 solutions.push([...board]);
-                await new Promise((resolve) => setTimeout(resolve, 100)); // Add delay for visualization
                 console.log(solutions);
                 return;
             }
@@ -102,6 +105,7 @@ export default {
             solutions,
             NoQ,
             val,
+            isSolutionFound,
         };
     },
 
