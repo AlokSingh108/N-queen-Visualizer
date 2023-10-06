@@ -12,7 +12,7 @@
             </div>
         <!-- </template> -->
         <ControlPanel :isSolving="isSolving" @start="startSolving" @stop="stopSolving" />
-        <solution :solutions="solutions" :boardSize="boardSize" />
+        <solution :solutions="solutions" :boardSize="boardSize" :isSolutionFound="isSolutionFound" />
     </div>
 </template>
 
@@ -52,9 +52,10 @@ export default {
         const solveNQueensUtil = async (col) => {
             if (col >= boardSize.value) {
                 isSolutionFound.value=true;
+                solutions.push([...board]);
                 await new Promise((resolve) => setTimeout(resolve, 2000)); // Add delay for visualization
                 isSolutionFound.value=false;
-                solutions.push([...board]);
+                await new Promise((resolve) => setTimeout(resolve, 1000)); // Add delay for visualization
                 console.log(solutions);
                 return;
             }
